@@ -45,6 +45,8 @@ contract ZKTRWhiteList is Ownable, Pausable, Initializable {
         zktrToken = IERC20(zktrToken_);
         srcToken = IERC20(srcToken_);
         _initOwner(owner_);
+        round = 1;
+        rate = 100;
     }
 
     function deposit(uint amount) external whenNotPaused lock {
