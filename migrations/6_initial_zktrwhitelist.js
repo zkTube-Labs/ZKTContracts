@@ -8,14 +8,14 @@ module.exports = async function (deployer, network, accounts) {
   // console.log("accounts =", accounts);
 
   // accounts
-  let owner;
-  let proxyAdmin;
+  let owner = '0x376f9f609f387D227F2F506165043805779d1013';
+  let proxyAdmin = '0x376f9f609f387D227F2F506165043805779d1013';
   let deployerAccount = accounts[0];
-  let srcTokenAddress = ''; // zktc contract
-  let zktrAddress = '';
+  let srcTokenAddress = '0x05C11E99d646cA5530DD2E4Ab82023d3A4f39647'; // zktc contract
+  let zktrAddress = '0xc53d46fd66edeb5d6f36e53ba22eee4647e2cdb2';
   if (network == "test" || network == "ganache"){
-    owner = accounts[0];
-    proxyAdmin = accounts[1];
+    owner = accounts[1];
+    proxyAdmin = accounts[2];
         // deployed zktc
     await deployer.deploy(ZKT, "ZKTC", "ZKTC", 200000, owner);
     let zktcInstance = await ZKT.deployed({as: "ZKTC"});
@@ -28,15 +28,10 @@ module.exports = async function (deployer, network, accounts) {
     zktrAddress = zktrInstance.address;
 
   } else if (network == "rinkeby"){
-    owner = "0x0f94d7eF39476EcBcd9137fd4534E0c3041738d7";
-    proxyAdmin = "0x5f71aC553fcEBcCB0Aed4428B04B77cf9379Ae38";
-    // srcTokenAddress = '0x7A67a4512FED021AdA97949f75175Cb4Ad269ACF' // zktt contract
-    // zktrAddress = '0x42339Eb7C4de26A5ad669a3A9f4cf08D7C1ba2f2';
-    await deployer.deploy(ZKT, "ZKTC", "ZKTC", 200000, owner);
-    let zktcInstance = await ZKT.deployed({as: "ZKTC"});
-    console.log("zktc address =", zktcInstance.address);
-    srcTokenAddress = zktcInstance.address;
-    // deployed zktr
+    owner = "0x376f9f609f387D227F2F506165043805779d1013";
+    proxyAdmin = "0x376f9f609f387D227F2F506165043805779d1013";
+    srcTokenAddress = '0xdbf8b2a2475f1d226f3b1bfc679df837b9c63027' // zktt contract
+    // zktrAddress = '0xc53d46fd66edeb5d6f36e53ba22eee4647e2cdb2';
     await deployer.deploy(ZKT, "ZKTR", "ZKTR", 200000, owner);
     let zktrInstance = await ZKT.deployed({as: "ZKTR"});
     console.log("zktr address =", zktrInstance.address);
