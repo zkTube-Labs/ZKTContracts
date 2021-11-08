@@ -101,7 +101,7 @@ contract ZKTVesting2 is Ownable, Initializable, Testable {
     function withdraw() external lock() returns (bool) {
         address account = _msgSender();
         bool isLocked = lockAccounts[account];
-        require(isLocked, 'withdraw: account locked');
+        require(!isLocked, 'withdraw: account locked');
         uint currentDay = getCurrentTime() / ONE_DAY;
         uint amount = avails[account];
         for(uint i = 0; i < DURATION; i++){
