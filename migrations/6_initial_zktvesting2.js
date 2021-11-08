@@ -45,36 +45,4 @@ module.exports = async function (deployer, network, accounts) {
   await zktVestingInstance.transferOwnership(owner,{from: deployerAccount});
   console.log("zktVesting new owner =", await zktVestingInstance.owner());
 
-  // proxy init params
-  const abiEncodeData = web3.eth.abi.encodeFunctionCall({
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "token_",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "timer_",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "owner_",
-          "type": "address"
-        }
-      ],
-      "name": "initialize",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }, ['0x02C0a5C02b126BD5e0ae1E548a22EA68Fe0D8478', timerAddress, owner]);
-
-
-//   // deploy proxy
-//   await deployer.deploy(ZKTVestingUpgradeableProxy, zktVestingInstance.address, proxyAdmin, abiEncodeData);
-//   let zktVestingUpgradeableProxyInstance = await ZKTVestingUpgradeableProxy.deployed();
-//   console.log("zktVesting proxy address =", zktVestingUpgradeableProxyInstance.address);
-//   console.log("zktVesting proxy admin() =", await zktVestingUpgradeableProxyInstance.admin.call({from: proxyAdmin}));
-//   console.log("zktVesting proxy implementation() =", await zktVestingUpgradeableProxyInstance.implementation.call({from: proxyAdmin}));
 };
