@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 import "../utils/Ownable.sol";
 import "../utils/Testable.sol";
 
-contract ZKTVesting is Ownable, Initializable, Testable {
+contract ZKTVesting2 is Ownable, Initializable, Testable {
 
     event BatchReward(address indexed from, uint totalAmount, string memo);
 
