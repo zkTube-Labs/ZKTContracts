@@ -24,9 +24,10 @@ const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 const privateKey = fs.readFileSync("../test_deployer.key").toString().trim();
 
-const infura_rinkeby = fs.readFileSync("../infura_rinkeby.key").toString().trim();
-const infura_ropsten = fs.readFileSync("../infura_ropsten.key").toString().trim();
-const infura_mainnet = fs.readFileSync("../infura_mainnet.key").toString().trim();
+const infura = fs.readFileSync("../infura.key").toString().trim();
+// const infura_rinkeby = fs.readFileSync("../infura_rinkeby.key").toString().trim();
+// const infura_ropsten = fs.readFileSync("../infura_ropsten.key").toString().trim();
+// const infura_mainnet = fs.readFileSync("../infura_mainnet.key").toString().trim();
 
 const etherscanApiKey = fs.readFileSync("../etherscanApiKey.key").toString().trim();
 console.log("etherscanApiKey=", etherscanApiKey);
@@ -72,17 +73,17 @@ module.exports = {
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
     rinkeby: {
-        provider: () => new HDWalletProvider(privateKey, "https://rinkeby.infura.io/v3/" + infura_rinkeby),
+        provider: () => new HDWalletProvider(privateKey, "https://rinkeby.infura.io/v3/" + infura),
         network_id: 4,
         skipDryRun: true
     },
     ropsten: {
-      provider: () => new HDWalletProvider(privateKey, "https://rinkeby.infura.io/v3/" + infura_ropsten),
+      provider: () => new HDWalletProvider(privateKey, "https://ropsten.infura.io/v3/" + infura),
       network_id: 3,
       skipDryRun: true
     },
     mainnet: {
-      provider: () => new HDWalletProvider(privateKey, "https://mainnet.infura.io/v3/" + infura_mainnet),
+      provider: () => new HDWalletProvider(privateKey, "https://mainnet.infura.io/v3/" + infura),
       gasPrice: 30000000000,  // 20 gwei (in wei) (default: 100 gwei)
       gas: 1342021,
       network_id: 1,
