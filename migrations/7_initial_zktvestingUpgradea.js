@@ -17,7 +17,6 @@ module.exports = async function (deployer, network, accounts) {
 
   // accounts
   let owner;
-  let proxyAdmin;
   let proxyAdmin = accounts[0];
   if (network == "test" || network == "ganache"){
     owner = accounts[1];
