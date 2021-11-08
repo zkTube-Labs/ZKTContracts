@@ -49,11 +49,11 @@ module.exports = async function (deployer, network, accounts) {
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
-    }, ['0x02C0a5C02b126BD5e0ae1E548a22EA68Fe0D8478', '0x13ebef615187691b08a75417099f6e8f1920fde3', owner]);
+    }, ['0x02C0a5C02b126BD5e0ae1E548a22EA68Fe0D8478', '0x67149190Ee41d37F7A3DA2da631BCAb3c4E95147', owner]);
 
-    let   zktVestingUpgradeableProxyInstance = ZKTVestingUpgradeableProxy.at('0x3085B6B9791a75289a19F90A9DA1a223cC31F0Ea');
+    let   zktVestingUpgradeableProxyInstance = await ZKTVestingUpgradeableProxy.at('0x3085B6B9791a75289a19F90A9DA1a223cC31F0Ea');
     
-    let ret = zktVestingUpgradeableProxyInstance.upgradeToAndCall('0xCe19732dd62fb2E39e4611c4dc8c9684C5FF8e0b', abiEncodeData, {from: proxyAdmin});
+    let ret = await zktVestingUpgradeableProxyInstance.upgradeToAndCall('0xaB988Bc25CA2C8b15f16B25fCD3B717F8BF809A2', abiEncodeData, {from: proxyAdmin});
     console.log('ret:', ret);
 //   // deploy proxy
 //   await deployer.deploy(ZKTVestingUpgradeableProxy, zktVestingInstance.address, proxyAdmin, abiEncodeData);
