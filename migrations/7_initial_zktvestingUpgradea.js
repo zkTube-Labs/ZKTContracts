@@ -18,32 +18,14 @@ module.exports = async function (deployer, network, accounts) {
   // accounts
   let owner;
   let proxyAdmin;
-  let deployerAccount = accounts[0];
+  let proxyAdmin = accounts[0];
   if (network == "test" || network == "ganache"){
     owner = accounts[1];
     proxyAdmin = accounts[2];
   } else if (network == "rinkeby"){
     owner = "0xFcdd477dEA9e591A5E508e967264c1c98a821742";
-    proxyAdmin = "0xFA5Bd533005dCcD18103Ec21fFa3f5E869BdC635";
   }
 
-  let timerAddress = constants.ZERO_ADDRESS;
-  if (network == "test" || network == "ganache" || network == "rinkeby"){
-    // deploy timer contract for test
-    await deployer.deploy(Timer);
-    let timerInstance = await Timer.deployed();
-    timerAddress = timerInstance.address;
-  }
-  await deployer.deploy(ZKTVesting, '0x02C0a5C02b126BD5e0ae1E548a22EA68Fe0D8478', timerAddress);
-  let zktVestingInstance = await ZKTVesting.deployed();
-  // log
-  console.log("timer address=", timerAddress);
-  console.log("zktVesting address=", zktVestingInstance.address);
-
-  // transfer ownerships
-  console.log("zktVesting owner()=", await zktVestingInstance.owner());
-  await zktVestingInstance.transferOwnership(owner,{from: deployerAccount});
-  console.log("zktVesting new owner =", await zktVestingInstance.owner());
 
   // proxy init params
   const abiEncodeData = web3.eth.abi.encodeFunctionCall({
@@ -68,9 +50,12 @@ module.exports = async function (deployer, network, accounts) {
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
-    }, ['0x02C0a5C02b126BD5e0ae1E548a22EA68Fe0D8478', timerAddress, owner]);
+    }, ['0x02C0a5C02b126BD5e0ae1E548a22EA68Fe0D8478', '0x13ebef615187691b08a75417099f6e8f1920fde3', owner]);
 
-
+    let   zktVestingUpgradeableProxyInstance = ZKTVestingUpgradeableProxy.at('0x3085B6B9791a75289a19F90A9DA1a223cC31F0Ea');
+    
+    let ret = zktVestingUpgradeableProxyInstance.upgradeToAndCall('0xCe19732dd62fb2E39e4611c4dc8c9684C5FF8e0b', abiEncodeData, {from: proxyAdmin});
+    console.log('ret:', ret);
 //   // deploy proxy
 //   await deployer.deploy(ZKTVestingUpgradeableProxy, zktVestingInstance.address, proxyAdmin, abiEncodeData);
 //   let zktVestingUpgradeableProxyInstance = await ZKTVestingUpgradeableProxy.deployed();
