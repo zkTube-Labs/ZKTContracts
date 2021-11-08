@@ -45,4 +45,34 @@ module.exports = async function (deployer, network, accounts) {
   await zktVestingInstance.transferOwnership(owner,{from: deployerAccount});
   console.log("zktVesting new owner =", await zktVestingInstance.owner());
 
+
+  // proxy init params
+  const abiEncodeData = web3.eth.abi.encodeFunctionCall({
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token_",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "timer_",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "owner_",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }, ['0x02C0a5C02b126BD5e0ae1E548a22EA68Fe0D8478', timerAddress, owner]);
+
+  let   zktVestingUpgradeableProxyInstance = await ZKTVestingUpgradeableProxy.at('0x3085B6B9791a75289a19F90A9DA1a223cC31F0Ea');
+  
+  let ret = await zktVestingUpgradeableProxyInstance.upgradeToAndCall(zktVestingInstance.address, abiEncodeData, {from: deployerAccount});
+  console.log('ret:', ret);
 };
