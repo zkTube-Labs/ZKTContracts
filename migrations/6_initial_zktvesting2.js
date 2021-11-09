@@ -1,13 +1,10 @@
 const ZKT = artifacts.require("ZKT");
 const Timer = artifacts.require("Timer");
-const ZKTVesting = artifacts.require("ZKTVesting2");
+const ZKTVesting3 = artifacts.require("ZKTVesting3");
 const ZKTVestingUpgradeableProxy = artifacts.require("ZKTVestingUpgradeableProxy");
 
 const {
-  BN,           // Big Number support
   constants,    // Common constants, like the zero address and largest integers
-  expectEvent,  // Assertions for emitted events
-  expectRevert, // Assertions for transactions that should fail
 } = require('@openzeppelin/test-helpers');
 
 module.exports = async function (deployer, network, accounts) {
@@ -17,7 +14,6 @@ module.exports = async function (deployer, network, accounts) {
 
   // accounts
   let owner;
-  let proxyAdmin;
   let deployerAccount = accounts[0];
   if (network == "test" || network == "ganache"){
     owner = accounts[1];
@@ -34,16 +30,16 @@ module.exports = async function (deployer, network, accounts) {
     let timerInstance = await Timer.deployed();
     timerAddress = timerInstance.address;
   }
-  await deployer.deploy(ZKTVesting, '0x02C0a5C02b126BD5e0ae1E548a22EA68Fe0D8478', timerAddress);
-  let zktVestingInstance = await ZKTVesting.deployed();
+  await deployer.deploy(ZKTVesting3, '0x02C0a5C02b126BD5e0ae1E548a22EA68Fe0D8478', timerAddress);
+  let zktVestingInstance = await ZKTVesting3.deployed();
   // log
   console.log("timer address=", timerAddress);
-  console.log("zktVesting address=", zktVestingInstance.address);
+  console.log("zktVesting3 address=", zktVestingInstance.address);
 
   // transfer ownerships
-  console.log("zktVesting owner()=", await zktVestingInstance.owner());
+  console.log("zktVesting3 owner()=", await zktVestingInstance.owner());
   await zktVestingInstance.transferOwnership(owner,{from: deployerAccount});
-  console.log("zktVesting new owner =", await zktVestingInstance.owner());
+  console.log("zktVesting3 new owner =", await zktVestingInstance.owner());
 
 
   // proxy init params
@@ -73,6 +69,7 @@ module.exports = async function (deployer, network, accounts) {
 
   let   zktVestingUpgradeableProxyInstance = await ZKTVestingUpgradeableProxy.at('0x3085B6B9791a75289a19F90A9DA1a223cC31F0Ea');
   
-  let ret = await zktVestingUpgradeableProxyInstance.upgradeToAndCall(zktVestingInstance.address, abiEncodeData, {from: deployerAccount});
+  // let ret = await zktVestingUpgradeableProxyInstance.upgradeToAndCall(zktVestingInstance.address, abiEncodeData, {from: deployerAccount});
+  let ret = await zktVestingUpgradeableProxyInstance.upgradeTo(zktVestingInstance.address, {from: deployerAccount});
   console.log('ret:', ret);
 };

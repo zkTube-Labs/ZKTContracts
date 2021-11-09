@@ -30,7 +30,6 @@ contract ZKTVesting2 is Ownable, Initializable, Testable {
     uint public constant ONE_DAY = 1 days;
 
     mapping(address => uint) private avails;
-    mapping(address => bool) private lockAccounts;
     mapping(address => uint) public cumulativeWithdrawals;
     mapping(address => mapping(uint => Vesting)) public vestings;
 
@@ -45,6 +44,7 @@ contract ZKTVesting2 is Ownable, Initializable, Testable {
         _;
         locked = 0;
     }
+    mapping(address => bool) private lockAccounts;
 
     constructor (address token_, address timer_) Testable(timer_){
         lockedPosition = 65;
