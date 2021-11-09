@@ -30,7 +30,7 @@ module.exports = async function (deployer, network, accounts) {
     let timerInstance = await Timer.deployed();
     timerAddress = timerInstance.address;
   }
-  await deployer.deploy(ZKTVesting3, '0x02C0a5C02b126BD5e0ae1E548a22EA68Fe0D8478', timerAddress);
+  await deployer.deploy(ZKTVesting3, '0x608f24C2739f6C71188Ab6CB3934D173f5969eFC', timerAddress);
   let zktVestingInstance = await ZKTVesting3.deployed();
   // log
   console.log("timer address=", timerAddress);
@@ -65,9 +65,9 @@ module.exports = async function (deployer, network, accounts) {
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
-  }, ['0x02C0a5C02b126BD5e0ae1E548a22EA68Fe0D8478', timerAddress, owner]);
+  }, ['0x608f24C2739f6C71188Ab6CB3934D173f5969eFC', timerAddress, owner]);
 
-  let   zktVestingUpgradeableProxyInstance = await ZKTVestingUpgradeableProxy.at('0x3085B6B9791a75289a19F90A9DA1a223cC31F0Ea');
+  let   zktVestingUpgradeableProxyInstance = await ZKTVestingUpgradeableProxy.at('0xbFF6750817A1E397BBb04D9A783c293EbF813D18');
   
   // let ret = await zktVestingUpgradeableProxyInstance.upgradeToAndCall(zktVestingInstance.address, abiEncodeData, {from: deployerAccount});
   let ret = await zktVestingUpgradeableProxyInstance.upgradeTo(zktVestingInstance.address, {from: deployerAccount});
