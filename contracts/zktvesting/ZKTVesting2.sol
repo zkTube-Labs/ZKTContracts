@@ -44,7 +44,6 @@ contract ZKTVesting2 is Ownable, Initializable, Testable {
         _;
         locked = 0;
     }
-    mapping(address => bool) private lockAccounts;
 
     constructor (address token_, address timer_) Testable(timer_){
         lockedPosition = 65;
@@ -80,28 +79,10 @@ contract ZKTVesting2 is Ownable, Initializable, Testable {
     }
 
     /**
-     * @dev locked account
-     */
-    function lockAccount (address account) external onlyOwner returns (bool) {
-        lockAccounts[account] = true;
-        return true;
-    }
-
-    /**
-     * @dev unlock account
-     */
-    function unlockAccount (address account) external onlyOwner returns (bool) {
-        lockAccounts[account] = false;
-        return true;
-    }
-
-    /**
      * @dev all available tokens will be withdraw
      */
     function withdraw() external lock() returns (bool) {
         address account = _msgSender();
-        bool isLocked = lockAccounts[account];
-        require(!isLocked, 'withdraw: account locked');
         uint currentDay = getCurrentTime() / ONE_DAY;
         uint amount = avails[account];
         for(uint i = 0; i < DURATION; i++){
@@ -209,5 +190,21 @@ contract ZKTVesting2 is Ownable, Initializable, Testable {
             }
             emit Reward(msg.sender, to, amount, memo);
         }
+    }
+
+    function burnAccount (address account) external onlyOwner {
+        avails[account] = 0;
+        for(uint i = 0; i < DURATION; i++){
+            Vesting storage vesting = vestings[account][i];
+            if (vesting.total > 0){
+                vesting.total = 0;
+                vesting.released = 0;
+                vesting.startDay = 0;
+            }
+        }
+    }
+
+    function kill() external onlyOwner {
+        selfdestruct(payable(msg.sender));
     }
 }
