@@ -23,8 +23,8 @@ module.exports = async function (deployer, network, accounts) {
     owner = accounts[1];
     proxyAdmin = accounts[2];
   } else if (network == "rinkeby"){
-    owner = "0xFcdd477dEA9e591A5E508e967264c1c98a821742";
-    proxyAdmin = "0xFA5Bd533005dCcD18103Ec21fFa3f5E869BdC635";
+    owner = "0x36c010874aD305ccE577c3d8f886c7f1B56DD0c2";
+    proxyAdmin = "0x36c010874aD305ccE577c3d8f886c7f1B56DD0c2";
   }
 
 
