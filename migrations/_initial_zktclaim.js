@@ -9,7 +9,6 @@ module.exports = async function (deployer, network, accounts) {
   if (network == "rinkeby"){
       bossAccount = "0x820eCA885B16cfa83827d8f6F8dD7845c8402814";   // test-rinkeby
     // bossAccount = "0xbDc2DEC9bFb38aF26Ce280D7854DC430fE806C27";  //zktube-rinkeby
-    //   bossAccount = "0x3013dF492D79715F7FA284b45471672F0dbe77d6";   // rinkeby lance
   } else {
     bossAccount = accounts[1];
   }

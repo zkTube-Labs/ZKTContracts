@@ -15,7 +15,7 @@ module.exports = async function (deployer, network, accounts) {
   if (network == "test" || network == "ganache"){
     zktOwner = accounts[1];
   } else if (network == "rinkeby"){
-    zktOwner = "0x020C6F69cB8e4930946593D364ba7c12d5dA4901";
+    zktOwner = "0x36c010874aD305ccE577c3d8f886c7f1B56DD0c2";
   }
 
   // deploy zkt

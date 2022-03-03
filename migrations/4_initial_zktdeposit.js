@@ -23,12 +23,13 @@ module.exports = async function (deployer, network, accounts) {
     owner = accounts[1];
     proxyAdmin = accounts[2];
   } else if (network == "rinkeby"){
-    owner = "0x020C6F69cB8e4930946593D364ba7c12d5dA4901";
-    proxyAdmin = "0xD9F36a916045E9865CA4502Aa9ab4324F6948ff8";
+    owner = "0x36c010874aD305ccE577c3d8f886c7f1B56DD0c2";
+    proxyAdmin = "0x36c010874aD305ccE577c3d8f886c7f1B56DD0c2";
   }
 
   // deployed zkt
   let zktInstance = await ZKT.deployed();
+  // let zktInstance = await ZKT.at("0x2209a429ab3d08759601671F6D5Ce46c967F4bB4");
 
   let timerAddress = constants.ZERO_ADDRESS;
   if (network == "test" || network == "ganache" || network == "rinkeby"){

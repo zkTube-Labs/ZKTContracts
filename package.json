@@ -7,6 +7,6 @@
     "ganache-cli": "^6.12.2"
   },
   "devDependencies": {
-    "truffle-plugin-verify": "^0.5.10"
+    "truffle-plugin-verify": "^0.5.21"
   }
 }

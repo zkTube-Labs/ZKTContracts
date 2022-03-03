@@ -2,3 +2,10 @@ out/
 build/
 .idea/
 node_modules/
+
+
+# key
+*.key
+
+#artifacts
+artifacts
