@@ -1,3 +1,5 @@
+//update
+
 const ZKT = artifacts.require("ZKT");
 const ZKTWhiteList = artifacts.require("ZKTWhiteList");
 const ZKTVestingUpgradeableProxy = artifacts.require("ZKTVestingUpgradeableProxy");
