@@ -1,0 +1,23 @@
+fix(zk_toolbox): improve readme to include containers command and cd (#…
+…2073)
+
+## What ❔
+
+- readme added dependencies section and cleaned up
+- fixed name of chain
+
+## Why ❔
+
+- to help testers
+
+## Checklist
+
+<!-- Check your PR fulfills the following items. -->
+<!-- For draft PRs check the boxes as you complete them. -->
+
+- [x] PR title corresponds to the body of PR (we generate changelog
+entries from PRs).
+- [x] Tests for the changes have been added / updated.
+- [x] Documentation comments have been added / updated.
+- [x] Code has been formatted via `zk fmt` and `zk lint`.
+- [x] Spellcheck has been run via `zk spellcheck`.
